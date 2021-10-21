@@ -1,0 +1,9 @@
+.idea/
+.vscode/
+__pycache__/
+
+# Initial config.py etc
+backup/
+
+# Distro Tube qtile setup (Taking ideas from here but it's just their repo clone)
+dt/
