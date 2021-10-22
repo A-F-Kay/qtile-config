@@ -1,0 +1,1 @@
+SCREENS_COUNT = 2
