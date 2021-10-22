@@ -19,49 +19,16 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import os
-import socket
 from typing import List  # noqa: F401
 
 from libqtile import bar, layout, widget, qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 
-mod = "mod4"
-terminal = guess_terminal()
-prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
+# Used by qtile
+from afkay_config.const import mod, terminal, prompt, groups
 
-colors = [["#282c34", "#282c34"],  # panel background
-          ["#3d3f4b", "#434758"],  # background for current screen tab
-          ["#ffffff", "#ffffff"],  # font color for group names
-          ["#ff5555", "#ff5555"],  # border line color for current tab
-          ["#74438f", "#74438f"],  # border line color for 'other tabs' and color for 'odd widgets'
-          ["#4f76c7", "#4f76c7"],  # color for the 'even widgets'
-          ["#e1acff", "#e1acff"],  # window name
-          ["#ecbbfb", "#ecbbfb"]]  # backbround for inactive screens
-
-# groups = [Group("WWW", {'layout': 'monadtall'}),
-#           Group("DEV", {'layout': 'monadtall'}),
-#           Group("SYS", {'layout': 'monadtall'}),
-#           Group("DOC", {'layout': 'monadtall'}),
-#           Group("VBOX", {'layout': 'monadtall'}),
-#           Group("CHAT", {'layout': 'monadtall'}),
-#           Group("MUS", {'layout': 'monadtall'}),
-#           Group("VID", {'layout': 'monadtall'}),
-#           Group("GFX", {'layout': 'floating'})]
-
-groups = [Group(name) for name in [
-    "CHAT", "DEV", "SYS", "WWW", "MUS", "VID"
-]]
-
-
-def window_to_another_screen(qtile):
-    screen_idx = qtile.screens.index(qtile.current_screen)
-    another_screen_idx = screen_idx - 1 if screen_idx > 0 else len(qtile.screens) - 1
-    if another_screen_idx != 9000:
-        group = qtile.screens[another_screen_idx].group.name
-        qtile.current_window.togroup(group)
+from afkay_config.const import WidgetColors
 
 
 keys = [
@@ -121,7 +88,6 @@ keys = [
     Key([mod], "v",
         lazy.spawn("tor-browser"),
         desc="Open Tor Browser (VPN-like stuff so it's mapped to 'v')"),
-
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(),
@@ -180,8 +146,8 @@ def init_widgets_list():
         widget.Sep(
             linewidth=0,
             padding=6,
-            foreground=colors[2],
-            background=colors[0]
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.PanelBg
         ),
         widget.Image(
             filename="~/.config/qtile/icons/python.png",
@@ -191,8 +157,8 @@ def init_widgets_list():
         widget.Sep(
             linewidth=0,
             padding=6,
-            foreground=colors[2],
-            background=colors[0]
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.PanelBg
         ),
         widget.GroupBox(
             font="Ubuntu Mono derivative Powerline",
@@ -202,48 +168,48 @@ def init_widgets_list():
             padding_y=5,
             padding_x=5,
             borderwidth=3,
-            active=colors[2],
-            inactive=colors[7],
+            active=WidgetColors.DefaultFg,
+            inactive=WidgetColors.InactiveScreenBg,
             rounded=False,
-            highlight_color=colors[1],
+            highlight_color=WidgetColors.CurrentScreenTabBg,
             highlight_method="line",
-            this_current_screen_border=colors[6],
-            this_screen_border=colors[4],
-            other_current_screen_border=colors[6],
-            other_screen_border=colors[4],
-            foreground=colors[2],
-            background=colors[0]
+            this_current_screen_border=WidgetColors.WindowNameFg,
+            this_screen_border=WidgetColors.OtherTabsBorder,
+            other_current_screen_border=WidgetColors.WindowNameFg,
+            other_screen_border=WidgetColors.OtherTabsBorder,
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.PanelBg
         ),
         widget.Prompt(
             prompt=prompt,
             padding=10,
-            foreground=colors[3],
-            background=colors[1]
+            foreground=WidgetColors.PromptFg,
+            background=WidgetColors.CurrentScreenTabBg
         ),
         widget.Sep(
             linewidth=0,
             padding=40,
-            foreground=colors[2],
-            background=colors[0]
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.PanelBg
         ),
         widget.WindowName(
-            foreground=colors[6],
-            background=colors[0],
+            foreground=WidgetColors.WindowNameFg,
+            background=WidgetColors.PanelBg,
             padding=0
         ),
         widget.Systray(
-            background=colors[0],
+            background=WidgetColors.PanelBg,
             padding=5
         ),
         widget.Sep(
             linewidth=0,
             padding=6,
-            foreground=colors[0],
-            background=colors[0]
+            foreground=WidgetColors.PanelBg,
+            background=WidgetColors.PanelBg
         ),
         widget.KeyboardLayout(
-            foreground=colors[2],
-            background=colors[5],
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.EvenWidgetBg,
             padding=8,
             configured_keyboards=["us", "ru"],
             desc="Next keyboard layout"
@@ -251,30 +217,30 @@ def init_widgets_list():
         widget.Memory(
             measure_mem='G',
             format='{MemUsed: .0f}{mm} /{MemTotal: .0f}{mm} ',
-            foreground=colors[2],
-            background=colors[4],
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.OddWidgetBg,
             mouse_callbacks={'Button1': lazy.spawn("alacritty" + ' -e htop')},
             padding=5
         ),
         widget.TextBox(
             text=" Vol:",
-            foreground=colors[2],
-            background=colors[5],
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.EvenWidgetBg,
             padding=0
         ),
         widget.Volume(
-            foreground=colors[2],
-            background=colors[5],
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.EvenWidgetBg,
             padding=5
         ),
         widget.CurrentLayout(
-            foreground=colors[2],
-            background=colors[4],
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.OddWidgetBg,
             padding=5
         ),
         widget.Clock(
-            foreground=colors[2],
-            background=colors[5],
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.EvenWidgetBg,
             format="%A, %B %d - %H:%M ",
             padding=8
         ),
