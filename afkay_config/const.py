@@ -4,7 +4,6 @@ import socket
 from afkay_config.colors import DtColors
 from afkay_config.utils import make_colors, make_groups
 
-
 # SUPER("WIN") key
 mod = 'mod4'
 terminal = 'alacritty'

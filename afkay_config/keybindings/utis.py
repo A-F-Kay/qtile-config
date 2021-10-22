@@ -4,7 +4,7 @@ from libqtile.config import Key
 from libqtile.lazy import lazy
 
 from afkay_config.const import groups, mod
-from afkay_config.keybindings.const import directions_keys_info
+from afkay_config.keybindings.const import directions_keys_info, apps_keymap
 
 
 def make_direction_bindings() -> List[Key]:
@@ -42,5 +42,16 @@ def make_group_bindings() -> List[Key]:
                             ),
                             desc=f"Switch to & move focused window "
                                  f"to group {group.name}"))
+
+    return bindings
+
+
+def make_app_bindings() -> List[Key]:
+    bindings: List[Key] = []
+
+    for key_name, app_info in apps_keymap.items():
+        bindings.append(
+            Key([mod], key_name, lazy.spawn(app_info.path), desc=f"Open {app_info.name}")
+        )
 
     return bindings

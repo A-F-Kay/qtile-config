@@ -26,7 +26,8 @@ from libqtile.config import Click, Drag, Key, Match
 from libqtile.lazy import lazy
 
 from afkay_config import const
-from afkay_config.keybindings.config import direction_bindings, group_bindings
+from afkay_config.keybindings.config import app_bindings, \
+    direction_bindings, group_bindings
 from afkay_config.screens.utils import make_screens
 
 mod = const.mod
@@ -52,24 +53,17 @@ keys = [
     Key([mod], "k", lazy.window.kill(), desc="Kill focused window"),
 
     # @afkay
-    Key([mod], "i", lazy.spawn("intellij-idea-ultimate-edition"),
-        desc="Open Intellij IDEA"),
-    Key([mod], "b", lazy.spawn("chromium"), desc="Open browser"),
-    Key([mod], "t", lazy.spawn("telegram-desktop"),
-        desc="Open Telegram messenger"),
-    Key([mod], "o", lazy.spawn("discord"), desc="Open Disc_O_rd"),
     Key([mod], "space",
         lazy.widget["keyboardlayout"].next_keyboard(),
         desc="Next keyboard layout"),
-    Key([mod], "v",
-        lazy.spawn("tor-browser"),
-        desc="Open Tor Browser (VPN-like stuff so it's mapped to 'v')"),
+
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
 ]
 
+keys.extend(app_bindings)
 keys.extend(direction_bindings)
 keys.extend(group_bindings)
 
@@ -103,7 +97,6 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
-
 
 # Drag floating layouts.
 mouse = [

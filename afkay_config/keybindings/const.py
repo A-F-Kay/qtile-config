@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Iterable, Callable, List
+from typing import Iterable, Callable, List, Dict
 
 from libqtile.lazy import lazy
 from pydantic import BaseModel
@@ -7,6 +7,22 @@ from pydantic import BaseModel
 from afkay_config.const import mod
 
 
+# ===================== Apps ===================== #
+class AppInfo(BaseModel):
+    name: str
+    path: str
+
+
+apps_keymap: Dict[str, AppInfo] = {
+    'i': AppInfo(path="intellij-idea-ultimate-edition", name="Intellij IDEA"),
+    'b': AppInfo(path="chromium", name="Chromium Browser"),
+    't': AppInfo(path="telegram-desktop", name="Telegram messanging app"),
+    'o': AppInfo(path="discord", name="Discord social app"),
+    'v': AppInfo(path="tor-browser", name="Tor Browser"),
+}
+
+
+# ================= Directions ================= #
 class DirectionKeyName(Enum):
     UP = 'up'
     LEFT = 'left'
