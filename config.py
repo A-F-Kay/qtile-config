@@ -28,6 +28,7 @@ from libqtile.lazy import lazy
 from afkay_config import const
 from afkay_config.keybindings.config import app_bindings, \
     direction_bindings, group_bindings
+from afkay_config.screens.const import SECONDARY_SCREEN, MAIN_SCREEN
 from afkay_config.screens.utils import make_screens
 
 mod = const.mod
@@ -37,8 +38,8 @@ groups = const.groups
 
 keys = [
     ### Switch focus to specific monitor (out of three)
-    Key([mod], "q", lazy.to_screen(0), desc='Keyboard focus to monitor 1'),
-    Key([mod], "e", lazy.to_screen(1), desc='Keyboard focus to monitor 2'),
+    Key([mod], "q", lazy.to_screen(SECONDARY_SCREEN), desc='Keyboard focus to monitor 1'),
+    Key([mod], "e", lazy.to_screen(MAIN_SCREEN), desc='Keyboard focus to monitor 2'),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
