@@ -55,8 +55,8 @@ def make_widgets():
             background=WidgetColors.PanelBg
         ),
         widget.GroupBox(
-            font="Ubuntu Mono derivative Powerline",
-            fontsize=13,
+            font="Source Code Pro Semibold",
+            fontsize=12,
             margin_y=3,
             margin_x=0,
             padding_y=5,
@@ -89,7 +89,8 @@ def make_widgets():
         widget.WindowName(
             foreground=WidgetColors.WindowNameFg,
             background=WidgetColors.PanelBg,
-            padding=0
+            padding=0,
+            for_current_screen=True
         ),
         widget.Systray(
             background=WidgetColors.PanelBg,
@@ -101,18 +102,25 @@ def make_widgets():
             foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.EvenWidgetBg),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.OddWidgetBg),
         widget.KeyboardLayout(
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.EvenWidgetBg,
+             foreground=WidgetColors.DefaultFg,
+             background=WidgetColors.OddWidgetBg,
+             padding=8,
+             configured_keyboards=["us", "ru"],
+             desc="Next keyboard layout"
+         ),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.OddWidgetBg, fg=WidgetColors.EvenWidgetBg),
+        widget.CPU(
             padding=8,
-            configured_keyboards=["us", "ru"],
-            desc="Next keyboard layout"
+            format="CPU: {load_percent}%",
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.EvenWidgetBg
         ),
         *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
         widget.Memory(
             measure_mem='G',
-            format='{MemUsed: .0f}{mm} /{MemTotal: .0f}{mm} ',
+            format='{MemUsed: .01f}{mm} /{MemTotal: .0f}{mm} ',
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.OddWidgetBg,
             padding=5
