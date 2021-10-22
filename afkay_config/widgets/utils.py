@@ -139,7 +139,7 @@ def make_widgets():
         widget.Clock(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.EvenWidgetBg,
-            format="%A, %B %d - %H:%M ",
+            format="%d/%m/%Y - %I:%M %p",
             padding=8
         ),
     ]
