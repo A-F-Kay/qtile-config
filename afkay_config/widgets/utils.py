@@ -1,7 +1,38 @@
+from enum import Enum
+
 from libqtile import widget, qtile
-from libqtile.lazy import lazy
 
 from afkay_config.const import WidgetColors, prompt
+
+
+class PowerlineDirection(Enum):
+    RIGHT = "r"
+    LEFT = "l"
+
+
+def _make_powerline(direction: PowerlineDirection, *, fg: str, bg: str):
+    if direction == PowerlineDirection.RIGHT:
+        return [
+            widget.TextBox(
+                text=u"\ue0b0",
+                foreground=fg,
+                background=bg,
+                fontsize=30,
+                padding=0
+            ),
+            widget.Sep(padding=0, linewidth=0, background=bg),
+        ]
+    else:
+        return [
+            widget.Sep(padding=0, linewidth=0, background=bg),
+            widget.TextBox(
+                text=u" \ue0b2",
+                foreground=fg,
+                background=bg,
+                fontsize=30,
+                padding=0,
+            ),
+        ]
 
 
 def make_widgets():
@@ -70,6 +101,7 @@ def make_widgets():
             foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.EvenWidgetBg),
         widget.KeyboardLayout(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.EvenWidgetBg,
@@ -77,14 +109,15 @@ def make_widgets():
             configured_keyboards=["us", "ru"],
             desc="Next keyboard layout"
         ),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
         widget.Memory(
             measure_mem='G',
             format='{MemUsed: .0f}{mm} /{MemTotal: .0f}{mm} ',
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.OddWidgetBg,
-            mouse_callbacks={'Button1': lazy.spawn("alacritty" + ' -e htop')},
             padding=5
         ),
+        *_make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
         widget.TextBox(
             text=" Vol:",
             foreground=WidgetColors.DefaultFg,
@@ -96,11 +129,13 @@ def make_widgets():
             background=WidgetColors.EvenWidgetBg,
             padding=5
         ),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
         widget.CurrentLayout(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.OddWidgetBg,
             padding=5
         ),
+        *_make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
         widget.Clock(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.EvenWidgetBg,
