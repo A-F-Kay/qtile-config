@@ -25,12 +25,18 @@ from libqtile import bar, layout, widget, qtile
 from libqtile.config import Click, Drag, Key, Match, Screen
 from libqtile.lazy import lazy
 
-# Used by qtile
-from afkay_config.const import mod, terminal, prompt, groups
-
 from afkay_config.const import WidgetColors
+# Used by qtile
 
-from afkay_config.keybinds.config import direction_bindings
+from afkay_config import const
+
+from afkay_config.keybindings.config import direction_bindings, group_bindings
+
+
+mod = const.mod
+terminal = const.terminal
+prompt = const.prompt
+groups = const.groups
 
 
 keys = [
@@ -71,22 +77,7 @@ keys = [
 
 keys.extend(direction_bindings)
 
-group_idx = 0
-for i in groups:
-    group_idx += 1
-    keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], str(group_idx), lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
-
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], str(group_idx), lazy.window.togroup(i.name, switch_group=True),
-            desc="Switch to & move focused window to group {}".format(i.name)),
-        # Or, use below if you prefer not to switch to that group.
-        # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-        #     desc="move focused window to group {}".format(i.name)),
-    ])
+keys.extend(group_bindings)
 
 layouts = [
     layout.Columns(
