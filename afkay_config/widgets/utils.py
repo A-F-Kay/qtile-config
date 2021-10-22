@@ -20,11 +20,9 @@ def _make_powerline(direction: PowerlineDirection, *, fg: str, bg: str):
                 fontsize=30,
                 padding=0
             ),
-            widget.Sep(padding=0, linewidth=0, background=bg),
         ]
     else:
         return [
-            widget.Sep(padding=0, linewidth=0, background=bg),
             widget.TextBox(
                 text=u" \ue0b2",
                 foreground=fg,
@@ -62,11 +60,11 @@ def make_widgets():
             padding_y=5,
             padding_x=5,
             borderwidth=3,
+            rounded=False,
+            highlight_method="line",
             active=WidgetColors.DefaultFg,
             inactive=WidgetColors.InactiveScreenBg,
-            rounded=False,
             highlight_color=WidgetColors.CurrentScreenTabBg,
-            highlight_method="line",
             this_current_screen_border=WidgetColors.WindowNameFg,
             this_screen_border=WidgetColors.OtherTabsBorder,
             other_current_screen_border=WidgetColors.WindowNameFg,
@@ -102,14 +100,20 @@ def make_widgets():
             foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.OddWidgetBg),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.EvenWidgetBg),
         widget.KeyboardLayout(
              foreground=WidgetColors.DefaultFg,
-             background=WidgetColors.OddWidgetBg,
+             background=WidgetColors.EvenWidgetBg,
              padding=8,
              configured_keyboards=["us", "ru"],
              desc="Next keyboard layout"
          ),
+        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+        widget.CryptoTicker(
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.OddWidgetBg,
+            currency='USD'
+        ),
         *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.OddWidgetBg, fg=WidgetColors.EvenWidgetBg),
         widget.CPU(
             padding=8,

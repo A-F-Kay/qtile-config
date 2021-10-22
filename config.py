@@ -21,7 +21,10 @@
 # SOFTWARE.
 from typing import List  # noqa: F401
 
-from libqtile import layout
+import os
+import subprocess
+
+from libqtile import layout, hook
 from libqtile.config import Click, Drag, Key, Match
 from libqtile.lazy import lazy
 
@@ -126,6 +129,12 @@ floating_layout = layout.Floating(float_rules=[
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
+
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser('~')
+    subprocess.call(['bash', '/home/afkay/.config/qtile/afkay_config/scripts/autostart.sh'])
+
 
 # If things like steam games want to auto-minimize themselves when losing
 # focus, should we respect this or not?
