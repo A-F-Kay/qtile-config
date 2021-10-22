@@ -9,5 +9,3 @@ from afkay_config.keybindings.utis import \
 direction_bindings: List[Key] = make_direction_bindings()
 
 group_bindings: List[Key] = make_group_bindings()
-
-kek = 2
