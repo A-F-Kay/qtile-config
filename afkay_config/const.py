@@ -13,11 +13,34 @@ groups = make_groups()
 
 class WidgetColors:
     PanelBg = make_colors(DtColors.PanelBg)
-    CurrentScreenTabBg = make_colors(DtColors.CurrentScreenTabBg)
     DefaultFg = make_colors(DtColors.DefaultFg)
-    PromptFg = make_colors(DtColors.PromptFg)
-    OtherTabsBorder = make_colors(DtColors.OtherTabsBorder)
-    OddWidgetBg = make_colors(DtColors.OtherTabsBorder)
-    EvenWidgetBg = make_colors(DtColors.EvenWidgetBg)
-    WindowNameFg = make_colors(DtColors.WindowNameFg)
+
     InactiveScreenBg = make_colors(DtColors.InactiveScreenBg)
+    CurrentScreenTabBg = make_colors(DtColors.CurrentScreenTabBg)
+    OtherTabsBorder = make_colors(DtColors.OtherTabsBorder)
+    PromptFg = make_colors(DtColors.PromptFg)
+    WindowNameFg = make_colors(DtColors.WindowNameFg)
+
+    OddWidget = {
+        'foreground': DtColors.DefaultFg,
+        'background': DtColors.OtherTabsBorder,
+    }
+    EvenWidget = {
+        'foreground': DtColors.DefaultFg,
+        'background': DtColors.EvenWidgetBg
+    }
+
+
+class PowerlineColors:
+    BeforeFirst = {
+        'background': WidgetColors.PanelBg,
+        'foreground': WidgetColors.OddWidget['background'],
+    }
+    BeforeEven = {
+        'background': WidgetColors.OddWidget['background'],
+        'foreground': WidgetColors.EvenWidget['background'],
+    }
+    BeforeOdd = {
+        'background': WidgetColors.EvenWidget['background'],
+        'foreground': WidgetColors.OddWidget['background'],
+    }

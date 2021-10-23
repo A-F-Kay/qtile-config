@@ -1,32 +1,26 @@
-from enum import Enum
-
 from libqtile import widget, qtile
 
-from afkay_config.const import WidgetColors, prompt
+from afkay_config.const import WidgetColors, PowerlineColors, prompt
 from afkay_config.widgets.MyCryptoTicker import MyCryptoTicker
 
 
-class PowerlineDirection(Enum):
-    RIGHT = "r"
-    LEFT = "l"
-
-
-def _make_powerline(direction: PowerlineDirection, *, fg: str, bg: str):
-    if direction == PowerlineDirection.RIGHT:
-        return widget.TextBox(
-            text=u"\ue0b0",
-            foreground=fg,
-            background=bg,
-            fontsize=30,
-            padding=0
-        )
-
+def _make_powerline_left(*, background: str, foreground: str):
     return widget.TextBox(
         text=u" \ue0b2",
-        foreground=fg,
-        background=bg,
+        foreground=foreground,
+        background=background,
         fontsize=30,
         padding=0,
+    )
+
+
+def _make_powerline_right(*, background: str, foreground: str):
+    return widget.TextBox(
+        text=u"\ue0b0",
+        foreground=foreground,
+        background=background,
+        fontsize=30,
+        padding=0
     )
 
 
@@ -35,7 +29,7 @@ def make_widgets():
         widget.Sep(
             linewidth=0,
             padding=6,
-            foreground=WidgetColors.DefaultFg,
+            foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
         widget.Image(
@@ -46,7 +40,7 @@ def make_widgets():
         widget.Sep(
             linewidth=0,
             padding=6,
-            foreground=WidgetColors.DefaultFg,
+            foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
         widget.GroupBox(
@@ -78,7 +72,7 @@ def make_widgets():
         widget.Sep(
             linewidth=0,
             padding=40,
-            foreground=WidgetColors.DefaultFg,
+            foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
         widget.WindowName(
@@ -91,65 +85,59 @@ def make_widgets():
             background=WidgetColors.PanelBg,
             padding=5
         ),
-        widget.Sep(
-            linewidth=0,
-            padding=6,
-            foreground=WidgetColors.PanelBg,
-            background=WidgetColors.PanelBg
-        ),
-        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.EvenWidgetBg),
+        _make_powerline_left(**PowerlineColors.BeforeFirst),
         widget.KeyboardLayout(
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.EvenWidgetBg,
+            **WidgetColors.OddWidget,
             padding=8,
             configured_keyboards=["us", "ru"],
             desc="Next keyboard layout"
         ),
-        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+        _make_powerline_left(**PowerlineColors.BeforeEven),
+        widget.CheckUpdates(
+            **WidgetColors.EvenWidget,
+            colour_no_updates=WidgetColors.EvenWidget['foreground'],
+            color_have_update=WidgetColors.EvenWidget['foreground'],
+            no_update_string="😊",
+            update_interval=60*40
+        ),
+        _make_powerline_left(**PowerlineColors.BeforeOdd),
         MyCryptoTicker(
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.OddWidgetBg,
+            **WidgetColors.OddWidget,
             currency='USD',
             amount_in_thousands=True,
             format="{crypto}: {symbol}{amount:.2f}K"
         ),
-        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.OddWidgetBg, fg=WidgetColors.EvenWidgetBg),
+        _make_powerline_left(**PowerlineColors.BeforeEven),
         widget.CPU(
+            **WidgetColors.EvenWidget,
             padding=8,
             format="CPU: {load_percent}%",
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.EvenWidgetBg
         ),
-        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+        _make_powerline_left(**PowerlineColors.BeforeOdd),
         widget.Memory(
+            **WidgetColors.OddWidget,
             measure_mem='G',
             format='{MemUsed: .01f}{mm} /{MemTotal: .0f}{mm} ',
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.OddWidgetBg,
             padding=5
         ),
-        _make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
+        _make_powerline_left(**PowerlineColors.BeforeEven),
         widget.TextBox(
+            **WidgetColors.EvenWidget,
             text=" Vol:",
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.EvenWidgetBg,
             padding=0
         ),
         widget.Volume(
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.EvenWidgetBg,
+            **WidgetColors.EvenWidget,
             padding=5
         ),
-        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+        _make_powerline_left(**PowerlineColors.BeforeOdd),
         widget.CurrentLayout(
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.OddWidgetBg,
+            **WidgetColors.OddWidget,
             padding=5
         ),
-        _make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
+        _make_powerline_left(**PowerlineColors.BeforeEven),
         widget.Clock(
-            foreground=WidgetColors.DefaultFg,
-            background=WidgetColors.EvenWidgetBg,
+            **WidgetColors.EvenWidget,
             format="%d/%m/%Y - %I:%M %p",
             padding=8
         ),
