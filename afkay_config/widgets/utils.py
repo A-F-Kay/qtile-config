@@ -13,25 +13,21 @@ class PowerlineDirection(Enum):
 
 def _make_powerline(direction: PowerlineDirection, *, fg: str, bg: str):
     if direction == PowerlineDirection.RIGHT:
-        return [
-            widget.TextBox(
-                text=u"\ue0b0",
-                foreground=fg,
-                background=bg,
-                fontsize=30,
-                padding=0
-            ),
-        ]
-    else:
-        return [
-            widget.TextBox(
-                text=u" \ue0b2",
-                foreground=fg,
-                background=bg,
-                fontsize=30,
-                padding=0,
-            ),
-        ]
+        return widget.TextBox(
+            text=u"\ue0b0",
+            foreground=fg,
+            background=bg,
+            fontsize=30,
+            padding=0
+        )
+
+    return widget.TextBox(
+        text=u" \ue0b2",
+        foreground=fg,
+        background=bg,
+        fontsize=30,
+        padding=0,
+    )
 
 
 def make_widgets():
@@ -101,15 +97,15 @@ def make_widgets():
             foreground=WidgetColors.PanelBg,
             background=WidgetColors.PanelBg
         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.EvenWidgetBg),
+        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.PanelBg, fg=WidgetColors.EvenWidgetBg),
         widget.KeyboardLayout(
-             foreground=WidgetColors.DefaultFg,
-             background=WidgetColors.EvenWidgetBg,
-             padding=8,
-             configured_keyboards=["us", "ru"],
-             desc="Next keyboard layout"
-         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+            foreground=WidgetColors.DefaultFg,
+            background=WidgetColors.EvenWidgetBg,
+            padding=8,
+            configured_keyboards=["us", "ru"],
+            desc="Next keyboard layout"
+        ),
+        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
         MyCryptoTicker(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.OddWidgetBg,
@@ -117,14 +113,14 @@ def make_widgets():
             amount_in_thousands=True,
             format="{crypto}: {symbol}{amount:.2f}K"
         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.OddWidgetBg, fg=WidgetColors.EvenWidgetBg),
+        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.OddWidgetBg, fg=WidgetColors.EvenWidgetBg),
         widget.CPU(
             padding=8,
             format="CPU: {load_percent}%",
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.EvenWidgetBg
         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
         widget.Memory(
             measure_mem='G',
             format='{MemUsed: .01f}{mm} /{MemTotal: .0f}{mm} ',
@@ -132,7 +128,7 @@ def make_widgets():
             background=WidgetColors.OddWidgetBg,
             padding=5
         ),
-        *_make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
+        _make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
         widget.TextBox(
             text=" Vol:",
             foreground=WidgetColors.DefaultFg,
@@ -144,13 +140,13 @@ def make_widgets():
             background=WidgetColors.EvenWidgetBg,
             padding=5
         ),
-        *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
+        _make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
         widget.CurrentLayout(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.OddWidgetBg,
             padding=5
         ),
-        *_make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
+        _make_powerline(PowerlineDirection.LEFT, fg=WidgetColors.EvenWidgetBg, bg=WidgetColors.OtherTabsBorder),
         widget.Clock(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.EvenWidgetBg,
