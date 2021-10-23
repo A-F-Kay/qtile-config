@@ -96,7 +96,7 @@ def make_widgets():
         widget.CheckUpdates(
             **WidgetColors.EvenWidget,
             colour_no_updates=WidgetColors.EvenWidget['foreground'],
-            color_have_update=WidgetColors.EvenWidget['foreground'],
+            colour_have_updates=WidgetColors.EvenWidget['foreground'],
             no_update_string="😊",
             update_interval=60*40
         ),
