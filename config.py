@@ -79,7 +79,8 @@ layouts = [
         border_normal='#49454c',
         margin=4,
         border_width=2,
-        border_on_single=False
+        border_on_single=True,
+        margin_on_single=16
     ),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
@@ -116,6 +117,8 @@ dgroups_app_rules = []  # type: List
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
+follow_mouse_focus = False
+
 floating_layout = layout.Floating(float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
     *layout.Floating.default_float_rules,
