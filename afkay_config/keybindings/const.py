@@ -19,6 +19,7 @@ apps_keymap: Dict[str, AppInfo] = {
     't': AppInfo(path="telegram-desktop", name="Telegram messanging app"),
     'o': AppInfo(path="discord", name="Discord social app"),
     'v': AppInfo(path="tor-browser", name="Tor Browser"),
+    'm': AppInfo(path="emacs", name="Doom emacs :evilsmile:"),
 }
 
 
