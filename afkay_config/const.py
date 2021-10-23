@@ -10,6 +10,8 @@ terminal = 'alacritty'
 prompt = f"{os.environ['USER']}@{socket.gethostname()}: "
 groups = make_groups()
 
+check_updates_interval_minutes = 40
+
 
 class WidgetColors:
     PanelBg = make_colors(DtColors.PanelBg)

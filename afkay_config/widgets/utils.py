@@ -1,6 +1,6 @@
 from libqtile import widget, qtile
 
-from afkay_config.const import WidgetColors, PowerlineColors, prompt
+from afkay_config.const import WidgetColors, PowerlineColors, prompt, check_updates_interval_minutes
 from afkay_config.widgets.MyCryptoTicker import MyCryptoTicker
 
 
@@ -98,7 +98,7 @@ def make_widgets():
             colour_no_updates=WidgetColors.EvenWidget['foreground'],
             colour_have_updates=WidgetColors.EvenWidget['foreground'],
             no_update_string="😊",
-            update_interval=60*40
+            update_interval=60*check_updates_interval_minutes
         ),
         _make_powerline_left(**PowerlineColors.BeforeOdd),
         MyCryptoTicker(
