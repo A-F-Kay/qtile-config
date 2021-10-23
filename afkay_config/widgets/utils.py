@@ -3,6 +3,7 @@ from enum import Enum
 from libqtile import widget, qtile
 
 from afkay_config.const import WidgetColors, prompt
+from afkay_config.widgets.MyCryptoTicker import MyCryptoTicker
 
 
 class PowerlineDirection(Enum):
@@ -109,10 +110,12 @@ def make_widgets():
              desc="Next keyboard layout"
          ),
         *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.EvenWidgetBg, fg=WidgetColors.OtherTabsBorder),
-        widget.CryptoTicker(
+        MyCryptoTicker(
             foreground=WidgetColors.DefaultFg,
             background=WidgetColors.OddWidgetBg,
-            currency='USD'
+            currency='USD',
+            amount_in_thousands=True,
+            format="{crypto}: {symbol}{amount:.2f}K"
         ),
         *_make_powerline(PowerlineDirection.LEFT, bg=WidgetColors.OddWidgetBg, fg=WidgetColors.EvenWidgetBg),
         widget.CPU(
