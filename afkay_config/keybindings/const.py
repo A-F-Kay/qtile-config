@@ -20,6 +20,7 @@ apps_keymap: Dict[str, AppInfo] = {
     'o': AppInfo(path="discord", name="Discord social app"),
     'v': AppInfo(path="tor-browser", name="Tor Browser"),
     'm': AppInfo(path="emacs", name="Doom emacs :evilsmile:"),
+    'backslash': AppInfo(path="cool-retro-term", name="Nice retro terminal:)"),
 }
 
 
