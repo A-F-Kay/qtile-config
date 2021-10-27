@@ -8,6 +8,6 @@ def make_colors(color: str, secondary_color: Optional[str] = None) -> List[str]:
 
 
 def make_groups() -> List[Group]:
-    group_names = ["WWW", "DOC", "DEV", "SCL", "FUN", "MDA"]
+    group_names = ["WWW", "DEV", "DOC", "SOCIAL", "VID", "MUS"]
 
     return [Group(name) for name in group_names]
