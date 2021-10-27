@@ -24,7 +24,7 @@ from typing import List  # noqa: F401
 import os
 import subprocess
 
-from libqtile import layout, hook
+from libqtile import layout, hook, qtile, bar
 from libqtile.config import Click, Drag, Key, Match
 from libqtile.lazy import lazy
 
@@ -38,6 +38,23 @@ mod = const.mod
 terminal = const.terminal
 prompt = const.prompt
 groups = const.groups
+
+
+# TODO: add to utils I think
+@hook.subscribe.layout_change
+def on_layout_change(layout, group):
+    try:
+        bar = qtile.current_screen.top
+    except AttributeError:
+        return
+
+    if layout.name == "max":
+        bar.show(False)
+    else:
+        bar.show(True)
+    
+    bar.current_screen.group.layout_all()
+
 
 keys = [
     ### Switch focus to specific monitor (out of three)
@@ -73,15 +90,18 @@ keys.extend(group_bindings)
 
 screens = make_screens()
 
+layout_cfg = {
+    'margin': 4,
+    'margin_on_single': 16,
+    'border_focus': '#F0D9FF',
+    'border_normal': '#49454c',
+    'border_width': 2,
+    'border_on_single': True,
+}
+
 layouts = [
-    layout.Columns(
-        border_focus='#F0D9FF',
-        border_normal='#49454c',
-        margin=4,
-        border_width=2,
-        border_on_single=True,
-        margin_on_single=16
-    ),
+    layout.Columns(**layout_cfg),
+    layout.MonadTall(**layout_cfg),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
