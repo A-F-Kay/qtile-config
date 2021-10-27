@@ -24,13 +24,16 @@ from typing import List  # noqa: F401
 import os
 import subprocess
 
-from libqtile import layout, hook, qtile, bar
+from libqtile import layout, hook
 from libqtile.config import Click, Drag, Key, Match
 from libqtile.lazy import lazy
 
 from afkay_config import const
 from afkay_config.keybindings.config import app_bindings, \
     direction_bindings, group_bindings
+from afkay_config.layouts.const import layouts as afkay_layouts
+# Unused. Needs to be imported to make hooks work
+from afkay_config.layouts.utils import on_layout_change  # noqa: F401
 from afkay_config.screens.const import SECONDARY_SCREEN, MAIN_SCREEN
 from afkay_config.screens.utils import make_screens
 
@@ -38,23 +41,7 @@ mod = const.mod
 terminal = const.terminal
 prompt = const.prompt
 groups = const.groups
-
-
-# TODO: add to utils I think
-@hook.subscribe.layout_change
-def on_layout_change(layout, group):
-    try:
-        bar = qtile.current_screen.top
-    except AttributeError:
-        return
-
-    if layout.name == "max":
-        bar.show(False)
-    else:
-        bar.show(True)
-    
-    bar.current_screen.group.layout_all()
-
+layouts = afkay_layouts
 
 keys = [
     ### Switch focus to specific monitor (out of three)
@@ -90,31 +77,9 @@ keys.extend(group_bindings)
 
 screens = make_screens()
 
-layout_cfg = {
-    'margin': 4,
-    'margin_on_single': 16,
-    'border_focus': '#F0D9FF',
-    'border_normal': '#49454c',
-    'border_width': 2,
-    'border_on_single': True,
-}
 
-layouts = [
-    layout.Columns(**layout_cfg),
-    layout.MonadTall(**layout_cfg),
-    layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
-]
+
+
 
 widget_defaults = dict(
     font='Ubuntu Mono derivative Powerline',
@@ -134,7 +99,6 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
-follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 follow_mouse_focus = False
