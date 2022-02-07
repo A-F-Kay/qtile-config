@@ -2,6 +2,7 @@ from libqtile import widget, qtile
 
 from afkay_config.const import WidgetColors, PowerlineColors, prompt, check_updates_interval_minutes
 from afkay_config.widgets.MyCryptoTicker import MyCryptoTicker
+from afkay_config.widgets.MyStopwatch import MyStopwatch
 
 
 def _make_powerline_left(*, background: str, foreground: str):
@@ -24,8 +25,26 @@ def _make_powerline_right(*, background: str, foreground: str):
     )
 
 
-def make_widgets():
-    widgets_list = [
+def make_widgets(screen: int):
+    """Make widgets for screen
+
+    Args:
+        screen (int): screen number (starting from "1")
+
+    Returns:
+        [type]: Array of widgets :)
+    """
+    widgets = []
+
+    stopwatch_addons = [
+        _make_powerline_left(**PowerlineColors.BeforeOdd),
+        MyStopwatch(
+            **WidgetColors.OddWidget,
+            padding=10
+        ),
+    ]
+    
+    base_widgets = [
         widget.Sep(
             linewidth=0,
             padding=6,
@@ -85,27 +104,15 @@ def make_widgets():
             background=WidgetColors.PanelBg,
             padding=5
         ),
+    ]
+    
+    addons = [
         _make_powerline_left(**PowerlineColors.BeforeFirst),
         widget.KeyboardLayout(
             **WidgetColors.OddWidget,
             padding=8,
             configured_keyboards=["us", "ru"],
             desc="Next keyboard layout"
-        ),
-        _make_powerline_left(**PowerlineColors.BeforeEven),
-        widget.CheckUpdates(
-            **WidgetColors.EvenWidget,
-            colour_no_updates=WidgetColors.EvenWidget['foreground'],
-            colour_have_updates=WidgetColors.EvenWidget['foreground'],
-            no_update_string="😊",
-            update_interval=60*check_updates_interval_minutes
-        ),
-        _make_powerline_left(**PowerlineColors.BeforeOdd),
-        MyCryptoTicker(
-            **WidgetColors.OddWidget,
-            currency='USD',
-            amount_in_thousands=True,
-            format="{crypto}: {symbol}{amount:.2f}K"
         ),
         _make_powerline_left(**PowerlineColors.BeforeEven),
         widget.CPU(
@@ -142,4 +149,11 @@ def make_widgets():
             padding=8
         ),
     ]
-    return widgets_list
+    
+    if screen == 1:
+        addons.extend(stopwatch_addons)
+
+    widgets.extend(base_widgets)
+    widgets.extend(addons)
+
+    return widgets

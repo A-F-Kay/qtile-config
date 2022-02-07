@@ -6,12 +6,12 @@ from afkay_config.widgets.utils import make_widgets
 
 
 def make_screens():
-    def make_screen():
+    def make_screen(screen: int):
         return Screen(
             top=bar.Bar(
-                make_widgets(),
+                make_widgets(screen),
                 24
             ),
         )
 
-    return [make_screen() for _ in range(SCREENS_COUNT)]
+    return [make_screen(idx+1) for idx in range(SCREENS_COUNT)]
