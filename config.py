@@ -101,7 +101,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: List
 bring_front_click = False
 cursor_warp = False
-follow_mouse_focus = False
+follow_mouse_focus = True
 
 floating_layout = layout.Floating(float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
