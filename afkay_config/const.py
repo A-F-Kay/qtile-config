@@ -2,7 +2,8 @@ import os
 import socket
 
 from afkay_config.colors import DtColors
-from afkay_config.utils import make_colors, make_groups
+from afkay_config.utils import make_colors
+from afkay_config.groups.utils import make_groups
 
 # SUPER("WIN") key
 mod = 'mod4'
