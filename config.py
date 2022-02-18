@@ -38,10 +38,14 @@ from afkay_config.screens.const import SECONDARY_SCREEN, MAIN_SCREEN
 from afkay_config.screens.utils import make_screens
 
 mod = const.mod
+alt = const.alt
 terminal = const.terminal
 prompt = const.prompt
 groups = const.groups
 layouts = afkay_layouts
+
+def latest_group(qtile):
+    qtile.current_screen.set_group(qtile.current_screen.previous_group)
 
 keys = [
     ### Switch focus to specific monitor (out of three)
@@ -69,6 +73,8 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(),
         desc="Spawn a command using a prompt widget"),
+    # Alt+Tab like on windows (toggle groups)
+    Key([alt], "Tab", lazy.function(latest_group)),
 ]
 
 keys.extend(app_bindings)

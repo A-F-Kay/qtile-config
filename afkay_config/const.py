@@ -7,6 +7,9 @@ from afkay_config.groups.utils import make_groups
 
 # SUPER("WIN") key
 mod = 'mod4'
+# Alt key
+alt = 'mod1'
+
 terminal = 'alacritty'
 prompt = f"{os.environ['USER']}@{socket.gethostname()}: "
 groups = make_groups()

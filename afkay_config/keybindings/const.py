@@ -17,7 +17,7 @@ apps_keymap: Dict[str, AppInfo] = {
     'i': AppInfo(path="intellij-idea-ultimate-edition", name="Intellij IDEA"),
     'b': AppInfo(path="chromium", name="Chromium Browser"),
     't': AppInfo(path="telegram-desktop", name="Telegram messanging app"),
-    'o': AppInfo(path="discord", name="Discord social app"),
+    'o': AppInfo(path="dvm run stable", name="Discord social app"),
     'v': AppInfo(path="tor-browser", name="Tor Browser"),
     'm': AppInfo(path="emacs", name="Doom emacs :evilsmile:"),
     'backslash': AppInfo(path="cool-retro-term", name="Nice retro terminal:)"),
